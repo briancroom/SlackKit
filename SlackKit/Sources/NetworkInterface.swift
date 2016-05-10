@@ -42,12 +42,16 @@ internal struct NetworkInterface {
         if let params = parameters {
             requestString += requestStringFromParameters(parameters: params)
         }
+
+        print("** In request. String: \(requestString)")
         
         do {
             var response: Response?
+            print("** Trying client")
             response = try client?.get(requestString)
-            
+            print("** Loading data")
             let data = try response?.body.becomeBuffer()
+            print("** Got data: \(data)")
             if let data = data {
                 let json = try Jay().jsonFromData(data.bytes)
                 if let result = json as? [String: Any] {
@@ -63,6 +67,7 @@ internal struct NetworkInterface {
                 }
             }
         } catch let error {
+            print("** Caught request error \(error)")
             if let slackError = error as? SlackError {
                 errorClosure(slackError)
             } else {

@@ -111,11 +111,14 @@ public class SlackWebAPI {
     
     //MARK: - RTM
     public func rtmStart(simpleLatest: Bool? = nil, noUnreads: Bool? = nil, mpimAware: Bool? = nil, success: ((response: [String: Any])->Void)?, failure: FailureClosure?) {
+        print("** In rtmStart")
         let parameters: [String: Any?] = ["simple_latest": simpleLatest, "no_unreads": noUnreads, "mpim_aware": mpimAware]
         client.api.request(endpoint: .RTMStart, token: client.token, parameters: filterNilParameters(parameters: parameters), successClosure: {
                 (response) -> Void in
+                print("** Request success: \(response)")
                 success?(response: response)
             }) {(error) -> Void in
+                print("** Request failure: \(error)")
                 failure?(error: error)
             }
     }

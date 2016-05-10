@@ -84,8 +84,10 @@ public class SlackClient {
         self.timeout = timeout
         self.reconnect = reconnect
         dispatcher = EventDispatcher(client: self)
+        print("*** Starting RTM")
         webAPI.rtmStart(simpleLatest: simpleLatest, noUnreads: noUnreads, mpimAware: mpimAware, success: {
             (response) -> Void in
+            print("*** Got response: \(response)")
             self.initialSetup(json: response)
             if let socketURL = response["url"] as? String {
                 do {
@@ -97,11 +99,13 @@ public class SlackClient {
                         }*/
                     })
                     try self.webSocket?.connect(uri.description)
-                } catch _ {
-                    
+                } catch let e {
+                    print("*** Failed to connect web socket: \(e)")
                 }
             }
-            }, failure:nil)
+            }, failure: { e in
+                print("*** Failed to start RTM: \(e)")
+        })
     }
     
     //TODO: Currently Unsupported
