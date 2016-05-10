@@ -29,7 +29,7 @@ let package = Package(
     dependencies: [
         .Package(url: "https://github.com/open-swift/C7.git", majorVersion: 0, minor: 7),
         .Package(url: "https://github.com/czechboy0/Jay.git", majorVersion: 0, minor: 6),
-        .Package(url: "https://github.com/Zewo/WebSocket", majorVersion: 0, minor: 6),
+        .Package(url: "https://github.com/briancroom/WebSocket", majorVersion: 0, minor: 6),
         ],
     exclude: ["Examples"]
 )
